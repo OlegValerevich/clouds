@@ -13,7 +13,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $a = 'Oleg';
-        return $this->render('default/index.html.twig', ['a' => $a]);
+        return $this->render('default/index.html.twig');
     }
 }
