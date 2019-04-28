@@ -1,7 +1,62 @@
-{% extends 'base.html.twig' %}
+{% extends '@App/main.html.twig' %}
 
-{% block body %}
-HI 
+{% block body %} 
+    <h2>Исполнители</h2>
+        <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Должность</th>
+                <th scope="col">Действие</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for performer in performers %}   
+              <tr>
+                <td scope="row" >{{ performer.id }}</td>
+                <td>{{ performer.name }}</td>
+                <td>{{ performer.position }}</td>
+                <td>
+                    <a href="#" id="">Удалить</a>
+                    /
+                    <a href="#" id="">Редактировать</a>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+    <h2>Задачи</h2>
+        <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Название</th>
+                <th scope="col">Исполнитель</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Действие</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}   
+              <tr>
+                <td scope="row" >{{ task.id }}</td>
+                <td>{{ task.name }}</td>
+                <td>{{ task.performerId }}</td>
+                <td>{{ task.status }}</td>
+                <td>{{ task.description }}</td>
+                <td>
+                    <a href="#" id="">Удалить</a>
+                    /
+                    <a href="#" id="">Редактировать</a>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 {% endblock %}
 
 {% block stylesheets %}
