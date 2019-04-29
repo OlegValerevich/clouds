@@ -1,0 +1,38 @@
+{% extends '@App/main.html.twig' %}
+
+{% block body %} 
+        <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Название</th>
+                <th scope="col">Исполнитель</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Действие</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}   
+              <tr>
+                <td scope="row" >{{ task.id }}</td>
+                <td>{{ task.name }}</td>
+                <td>{{ task.performerId }}</td>
+                <td>{{ task.status }}</td>
+                <td>{{ task.description }}</td>
+                <td>
+                    <a id="" href="" onclick="removeTask({{ task.id }});">Удалить</a>
+                    /
+                    <a href="#" id="">Редактировать</a>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="addTask(); return false;" value="Добавить"/>
+        
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

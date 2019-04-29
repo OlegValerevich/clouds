@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class TaskRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function remove($id){
+
+        $this
+                ->createQueryBuilder('task')
+                ->delete()
+                ->where('task.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getResult();
+        return;
+    }
 }

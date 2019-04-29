@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class PerformerRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function remove($id){
+
+        $this
+                ->createQueryBuilder('performer')
+                ->delete()
+                ->where('performer.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getResult();
+        return;
+    }
 }

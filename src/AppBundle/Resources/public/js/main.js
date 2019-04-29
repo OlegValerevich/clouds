@@ -1,4 +1,6 @@
-
+/**
+ * Clouds 
+ */
 //ф-я сбора информации с формы
 function getData(obj_form){
     var hData={};
@@ -11,45 +13,36 @@ function getData(obj_form){
     return hData;
 };
 
-
-function readFile(){
+function removePerformer(id){
     
-    console.log("js-readFile" );
-       
-    var files = $('#upload').prop("files")[0];
-    
-    if(typeof files == 'undefined') 
-        
-    return alert('Файл не выбран!');
-    
-    var Data = new FormData();
-    
-    Data.append('file', files);
-    Data.append('success', 1);
-        
-    console.log(files);
-        
     $.ajax({
         type: 'POST',
         async: false,
-        url: "/mylocal/www/index.php/?controller=file&action=readTextFromFile",
-        data: Data,
+        url: "/remove/"+id,
         dataType: 'json',
-        processData: false,
-        contentType: false,
-        success: function (data){
-           if(data['success']){ 
-            $('#text').html(data['text']);
-            
-            if($('#txtBox').css('dispaly') != 'block') {
-                $('#txtBox').show();
-            }else{
-                $('#txtBox').hide();
-            }
-            
-           }else{
-               alert(data['massage']);
-           }
-        }
+        success: false
+    });   
+}
+
+function removeTask(id){
+    
+    $.ajax({
+        type: 'POST',
+        async: false,
+        url: "/task/remove/"+id,
+        dataType: 'json',
+        success: false
+    });   
+}
+
+function addTask(){
+
+    var modal = new jBox('Modal', {
+        confirmButton: 'Ok',
+        cancelButton: 'No'
     });
+
+modal.open();
+// return alert('addPerformer');
+
 }
