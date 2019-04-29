@@ -5,30 +5,22 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type;
 
-class AddPerformerType extends AbstractType
+class TaskType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // $property = array('required' => false , 'empty_data'  =>  '0');
-        $builder
-                ->add('name', Type\TextType::class)
-                ->add('position', Type\TextType::class)
-        ;
-    }
-
-    /**
+        $builder->add('name')->add('performerId')->add('status')->add('description');
+    }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-             'data_class' => 'AppBundle\Entity\Performer'
-//            'data_class' => null
+            'data_class' => 'AppBundle\Entity\Task'
         ));
     }
 
@@ -37,7 +29,7 @@ class AddPerformerType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_performer';
+        return 'appbundle_task';
     }
 
 

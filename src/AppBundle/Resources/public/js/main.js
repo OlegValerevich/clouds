@@ -18,7 +18,7 @@ function removePerformer(id){
     $.ajax({
         type: 'POST',
         async: false,
-        url: "/remove/"+id,
+        url: "/performer/remove/"+id,
         dataType: 'json',
         success: false
     });   

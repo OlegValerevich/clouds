@@ -8,8 +8,10 @@
 
 namespace AppBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\AddPerformerType;
 use AppBundle\Entity\Performer;
@@ -43,20 +45,26 @@ class PerformerController extends Controller{
 
     /**
      * @Route("/performer/add", name="add_performer")
+     * @param Request $request
      */
-    public function addAction(Performer $performer)
+    public function addAction(Request $request)
     {
-        $form = $this->createForm(
-            AddPerformerType::class
-        );
+        $form = $this->createForm(AddPerformerType::class);
+        $form->add('Save', SubmitType::class);
+//        $form->add('Cansel', SubmitType::class);
 
-        dump($performer);
-        die();
-        // $form->handleRequest($performer);
+        $form->handleRequest($request);
         
         if ($form->isValid() && $form->isSubmitted()) 
         {
+            $perfomer = $form->getData();
             
+            $em = $this->getDoctrine()->getManager();
+            
+            $em->persist($perfomer);
+            
+            $em->flush();
+             
             return $this->redirectToRoute('performer_index');
         }
 
