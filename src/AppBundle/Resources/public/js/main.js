@@ -13,6 +13,17 @@ function getData(obj_form){
     return hData;
 };
 
+//function removePerformer(id){
+//    
+//    $.ajax({
+//        type: 'POST',
+//        async: false,
+//        url: "/performer/remove/"+id,
+//        dataType: 'json',
+//        success: false
+//    });   
+//}
+
 function removePerformer(id){
     
     $.ajax({
@@ -20,7 +31,13 @@ function removePerformer(id){
         async: false,
         url: "/performer/remove/"+id,
         dataType: 'json',
-        success: false
+        success: function(response){
+            if(response['success']){
+                $('#removePerf_'+id).hide();
+            }else{
+                alert('Ошибка! Операция не выполнена');
+           }
+        }
     });   
 }
 
@@ -31,7 +48,13 @@ function removeTask(id){
         async: false,
         url: "/task/remove/"+id,
         dataType: 'json',
-        success: false
+        success: function(response){
+            if(response['success']){
+                $('#removeTask_'+id).hide();
+            }else{
+                alert('Ошибка! Операция не выполнена');
+           }
+        }
     });   
 }
 

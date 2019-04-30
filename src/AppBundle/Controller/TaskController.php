@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Task;
 
 /**
@@ -44,13 +45,18 @@ class TaskController extends Controller{
     /**
      * @Route("/task/remove/{id}", name="removeTask")
      */
-    public function removeAction(Task $id)
+    public function removeAction($id)
     {
-        $this
-            ->getDoctrine()
-            ->getRepository('AppBundle:Task')
-            ->remove($id);
-       
-       return $this->redirectToRoute('task_index');
+        $id = intval($id);
+        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->find($id);
+        
+        if($task){
+            $id = $task->getId();
+            $this->getDoctrine()->getRepository('AppBundle:Task')->remove($id);
+            $rs['success'] = 1;
+        }else{
+            $rs['success'] = 0;
+        }
+        return new JsonResponse($rs, 200);
     }
 }

@@ -12,12 +12,12 @@
             </thead>
             <tbody>
             {% for performer in performers %}   
-              <tr>
+              <tr id="removePerf_{{performer.id}}">
                 <td scope="row" >{{ performer.id }}</td>
                 <td>{{ performer.name }}</td>
                 <td>{{ performer.position }}</td>
                 <td>
-                    <a id="" href="" onclick="removePerformer({{ performer.id }});">Удалить</a>
+                    <a id="" href="" onclick="removePerformer({{ performer.id }}); return false;">Удалить</a>
                     /
                     <a href="" id="">Редактировать</a>
                 </td>

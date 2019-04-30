@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\AddPerformerType;
@@ -80,15 +81,20 @@ class PerformerController extends Controller{
     }
 
     /**
-     * @Route("performer/remove/{id}", name="remove")
+     * @Route("performer/remove/{id}", name="removePerformer")
      */
-    public function removeAction(Performer $id)
+    public function removeAction($id)
     {
-        $this
-            ->getDoctrine()
-            ->getRepository('AppBundle:Performer')
-            ->remove($id);
-       
-       return $this->redirectToRoute('performer_index');
+        $id = intval($id);
+        $performer = $this->getDoctrine()->getRepository('AppBundle:Performer')->find($id);
+        
+        if($performer){
+            $id = $performer->getId();
+            $this->getDoctrine()->getRepository('AppBundle:Performer')->remove($id);
+            $rs['success'] = 1;
+        }else{
+            $rs['success'] = 0;
+        }
+        return new JsonResponse($rs, 200);
     }
 }
