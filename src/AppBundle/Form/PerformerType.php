@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type;
 
-class AddPerformerType extends AbstractType
+class PerformerType extends AbstractType
 {
     /**
      * {@inheritdoc}

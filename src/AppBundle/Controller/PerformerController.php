@@ -10,11 +10,12 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Form\AddPerformerType;
+use AppBundle\Form\PerformerType;
 use AppBundle\Entity\Performer;
 
 /**
@@ -50,9 +51,9 @@ class PerformerController extends Controller{
      */
     public function addAction(Request $request)
     {
-        $form = $this->createForm(AddPerformerType::class);
+        $form = $this->createForm(PerformerType::class);
         $form->add('Save', SubmitType::class);
-//        $form->add('Cansel', SubmitType::class);
+        $form->add('Cansel', SubmitType::class);
 
         $form->handleRequest($request);
         
@@ -74,10 +75,41 @@ class PerformerController extends Controller{
         ]);
     }
     
-
-    public function aditAction(Performer $id)
+     /**
+     * @Route("/performer/edit/{id}", name="edit_performer", requirements={"id"="\d+"})
+     * @Method({"GET","POST"})
+     */
+    public function editAction(Request $request, $id)
     {
-        return $this->render('@App/performer/adit.html.twig');
+        $performer = $this->getDoctrine()->getRepository('AppBundle:Performer')->find($id);
+
+        if(!$performer){
+            $this->addFlash('error', 'User does not exist');            
+            return $this->redirectToRoute('performer_index');
+        }
+        
+        $form = $this->createForm(PerformerType::class, $performer);
+        $form->add('Save', SubmitType::class);
+        $form->add('Cansel', SubmitType::class);
+        
+        $form->handleRequest($request);
+        
+        if ($form->isValid() && $form->isSubmitted()) 
+        {
+            $perfomer = $form->getData();
+            
+            $em = $this->getDoctrine()->getManager();
+            
+            $em->persist($perfomer);
+            
+            $em->flush();
+             
+            return $this->redirectToRoute('performer_index');
+        }
+        
+        return $this->render('@App/performer/edit.html.twig',[
+            'edit_form' => $form->createView()
+        ]);
     }
 
     /**

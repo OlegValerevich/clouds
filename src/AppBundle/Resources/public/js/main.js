@@ -49,21 +49,3 @@ function removeTask(id){
     });   
 }
 
-function addTask(id){
-    console.log(id);
-
-    $.ajax({
-        type: 'POST',
-        async: false,
-        url: "task/addTask/"+id,
-        dataType: 'json',
-        success: function(data){
-            if(data['success']){
-                console.log(data);
-                // $('#cartCntItems').html(data['cntItems']);
-                
-                // $('#addCart_'+itemId).show();
-                // $('#removePerf_'+id).hide();
-            }
-        }
-    });   

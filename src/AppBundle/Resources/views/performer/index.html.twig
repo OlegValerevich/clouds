@@ -17,9 +17,9 @@
                 <td>{{ performer.name }}</td>
                 <td>{{ performer.position }}</td>
                 <td>
-                    <a id="" href="" onclick="removePerformer({{ performer.id }}); return false;">Удалить</a>
+                    <a href="" onclick="removePerformer({{ performer.id }}); return false;">Удалить</a>
                     /
-                    <a href="" id="">Редактировать</a>
+                    <a href="{{ path('edit_performer', {id: performer.id}) }}" >Редактировать</a>
                 </td>
               </tr>
             {% endfor %}

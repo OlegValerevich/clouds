@@ -24,9 +24,18 @@
                 </ul>
             </div>
         </div>
+                
+        {% for flash in app.session.flashbag.get('error') %}
+            <div class="alert alert-warning">{{ flash }}</div>
+        {% endfor %}
+        
         <div class="row">
             <div class="col-sm">
             {% block body %}
+                    {% for flash in app.session.flashbag.get('error') %}
+            <div class="alert alert-warning">{{ flash }}</div>
+        {% endfor %}    
+                
 
             {% endblock %}  
             </div>
