@@ -13,17 +13,7 @@ function getData(obj_form){
     return hData;
 };
 
-//function removePerformer(id){
-//    
-//    $.ajax({
-//        type: 'POST',
-//        async: false,
-//        url: "/performer/remove/"+id,
-//        dataType: 'json',
-//        success: false
-//    });   
-//}
-
+//ф-я удаления исполнителя
 function removePerformer(id){
     
     $.ajax({
@@ -41,6 +31,7 @@ function removePerformer(id){
     });   
 }
 
+//ф-я удаления задачи
 function removeTask(id){
     
     $.ajax({
@@ -58,14 +49,21 @@ function removeTask(id){
     });   
 }
 
-function addTask(){
+function addTask(id){
+    console.log(id);
 
-    var modal = new jBox('Modal', {
-        confirmButton: 'Ok',
-        cancelButton: 'No'
-    });
-
-modal.open();
-// return alert('addPerformer');
-
-}
+    $.ajax({
+        type: 'POST',
+        async: false,
+        url: "task/addTask/"+id,
+        dataType: 'json',
+        success: function(data){
+            if(data['success']){
+                console.log(data);
+                // $('#cartCntItems').html(data['cntItems']);
+                
+                // $('#addCart_'+itemId).show();
+                // $('#removePerf_'+id).hide();
+            }
+        }
+    });   
