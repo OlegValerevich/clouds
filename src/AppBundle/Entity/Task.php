@@ -29,11 +29,11 @@ class Task
     private $name;
 
     /**
-     * @var int
+     * @var Performer|null
      *
-     * @ORM\Column(name="performer_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Performer")
      */
-    private $performerId;
+    private $performer;
 
     /**
      * @var int
@@ -48,7 +48,6 @@ class Task
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
-
 
     /**
      * Get id
@@ -83,29 +82,29 @@ class Task
     {
         return $this->name;
     }
-
+    
     /**
-     * Set performerId
+     * Set performer
      *
-     * @param integer $performerId
+     * @param string $performer
      *
-     * @return Task
+     * @return Performer
      */
-    public function setPerformerId($performerId)
+    public function setPerformer($performer)
     {
-        $this->performerId = $performerId;
+        $this->performer = $performer;
 
         return $this;
     }
 
     /**
-     * Get performerId
+     * Get performer
      *
-     * @return int
+     * @return Performer|null
      */
-    public function getPerformerId()
+    public function getPerformer()
     {
-        return $this->performerId;
+        return $this->performer;
     }
 
     /**

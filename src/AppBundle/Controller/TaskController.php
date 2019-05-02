@@ -9,45 +9,35 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use AppBundle\Entity\Task;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\TaskType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Description of TaskController
- * @Template("@App/task/index.html.twig")
+ * 
  */
 class TaskController extends Controller{
 
      /**
      * @Route("/task", name="task_index")
+     * @Template("@App/task/index.html.twig")
      */
     public function indexAction()
     {
         $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')->findAll();
-
-//        $tasks = [
-//            'id' => 1,
-//            'name' => 'Task 1',
-//            'performerId' => 1,
-//            'status' => 1,
-//            'description' => 'Progect 3'
-//        ];
-
         return ['tasks' => $tasks];
-        
-//        return $this->render('@App/task/index.html.twig', [
-//              'tasks' => compact('tasks')
-//          	]);
     }
       
     /**
-     * @Route("/task/remove/{id}", name="removeTask")
+     * @Route("/task/remove/{id}", name="removeTask", requirements={"id"="\d+"})
      */
     public function removeAction($id)
     {
-        $id = intval($id);
         $task = $this->getDoctrine()->getRepository('AppBundle:Task')->find($id);
         
         if($task){
@@ -58,5 +48,40 @@ class TaskController extends Controller{
             $rs['success'] = 0;
         }
         return new JsonResponse($rs, 200);
+    }
+    
+    /**
+     * @Route("/task/edit/{id}", name="edit_task", requirements={"id"="\d+"})
+     * @Method({"GET","POST"})
+     */
+    public function editAction(Request $request, $id)
+    {
+        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->findTaskJoinedPerformer($id);
+        
+        if(!$task){
+            $this->addFlash('error', 'Task does not exist');            
+            return $this->redirectToRoute('task_index');
+        }
+               
+        $form = $this->createForm(TaskType::class, $task);
+        $form->add('Save', SubmitType::class);
+        $form->add('Cansel', SubmitType::class);
+        
+        $form->handleRequest($request);
+        
+        if ($form->isValid() && $form->isSubmitted()) 
+        {
+            $task = $form->getData();
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($task);
+            $em->flush();
+             
+            return $this->redirectToRoute('task_index');
+        }
+        
+        return $this->render('@App/task/edit.html.twig',[
+            'edit_form' => $form->createView()
+        ]);
     }
 }

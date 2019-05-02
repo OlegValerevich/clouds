@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\PerformerType;
-use AppBundle\Entity\Performer;
 
 /**
  * Description of PerformerController
@@ -31,18 +30,7 @@ class PerformerController extends Controller{
     public function indexAction()
     {
         $performers = $this->getDoctrine()->getRepository('AppBundle:Performer')->findAll();
-        
-//      $performers = [
-//        'id' => 1,
-//        'name' => 'Иванов Иван Иваныч',
-//        'position' => 'директор'
-//      ];
-
         return ['performers' => $performers];
-        
-//        return $this->render('@App/performer/index.html.twig', [
-//              'performers' => compact('performers')
-//            ]);
     }
 
     /**
@@ -62,9 +50,7 @@ class PerformerController extends Controller{
             $perfomer = $form->getData();
             
             $em = $this->getDoctrine()->getManager();
-            
             $em->persist($perfomer);
-            
             $em->flush();
              
             return $this->redirectToRoute('performer_index');
@@ -99,9 +85,7 @@ class PerformerController extends Controller{
             $perfomer = $form->getData();
             
             $em = $this->getDoctrine()->getManager();
-            
             $em->persist($perfomer);
-            
             $em->flush();
              
             return $this->redirectToRoute('performer_index');
@@ -113,11 +97,10 @@ class PerformerController extends Controller{
     }
 
     /**
-     * @Route("performer/remove/{id}", name="removePerformer")
+     * @Route("performer/remove/{id}", name="removePerformer", requirements={"id"="\d+"})
      */
     public function removeAction($id)
     {
-        $id = intval($id);
         $performer = $this->getDoctrine()->getRepository('AppBundle:Performer')->find($id);
         
         if($performer){

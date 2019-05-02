@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class TaskType extends AbstractType
 {
@@ -13,8 +15,18 @@ class TaskType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('performerId')->add('status')->add('description');
-    }/**
+        $builder
+                ->add('name')
+                ->add('performer', EntityType::class, [
+                    'class' => 'AppBundle:Performer',
+                    'choice_label' => 'name'
+                ])
+                ->add('status')
+                ->add('description')
+        ;
+    }
+    
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -31,6 +43,4 @@ class TaskType extends AbstractType
     {
         return 'appbundle_task';
     }
-
-
 }
