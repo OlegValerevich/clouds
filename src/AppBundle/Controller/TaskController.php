@@ -56,7 +56,7 @@ class TaskController extends Controller{
      */
     public function editAction(Request $request, $id)
     {
-        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->findTaskJoinedPerformer($id);
+        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->find($id);
         
         if(!$task){
             $this->addFlash('error', 'Task does not exist');            
