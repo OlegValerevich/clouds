@@ -45,10 +45,17 @@ function addTask(){
             dataType: 'json',
             success: function(rs){
                 if(rs['success']){
-                    $('#taskPerformer').empty();
+                    $('#taskPerformer, #taskStatus').empty();
+                    
                     $.each(rs['performers'], function(key, value) {
-                        $('#taskPerformer').append('<option value="' + key + '">' + value + '</option>');});
-                        $("#addTask").modal({backdrop: "static"});
+                        $('#taskPerformer').append('<option value="' + key + '">' + value + '</option>');
+                    });
+
+                    $.each(rs['status'], function(key, value) {
+                        $('#taskStatus').append('<option value="' + key + '">' + value + '</option>');
+                    });
+                    
+                    $("#addTask").modal({backdrop: "static"});
                 }else {
                     alert(rs['massage']);
                     document.location = '/';

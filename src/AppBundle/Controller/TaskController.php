@@ -108,7 +108,9 @@ class TaskController extends Controller{
         
         $task->setName($request->request->get('name'));
         
-        $task->setStatus($request->request->get('status'));
+        $statusId = $request->request->get('status');
+        $status = $this->getDoctrine()->getRepository('AppBundle:Status')->find($statusId);
+        $task->setStatus($status);
         
         $task->setDescription($request->request->get('description'));
               
@@ -128,22 +130,29 @@ class TaskController extends Controller{
      */
     public function addAction()
     {   
-        $rs = [];
-        $performer = [];
-    
         $performers = $this->getDoctrine()->getRepository('AppBundle:Performer')->getPerformers();
 
         if($performers){
-            foreach ($performers as $values){
-                $values = array_values($values);
-                $performer[$values[0]] = $values[1];
-            }
-            $rs['performers'] = $performer;
+            $rs['performers'] = $this->setArrayByJS($performers);
+            
+            $status = $this->getDoctrine()->getRepository('AppBundle:Status')->getStatus();
+            $rs['status'] = $this->setArrayByJS($status);
+            
             $rs['success'] = 1;
         }else{
             $rs['success'] = 0;
             $rs['massage']= 'Ошибка! Необходимы исполнители.';
         }
         return new JsonResponse($rs, 200);
+    }
+    
+    protected function setArrayByJS($arr)
+    {
+        $arrJs =[];
+        foreach ($arr as $values){
+            $values = array_values($values);
+            $arrJs[$values[0]] = $values[1];
+        }
+        return $arrJs;
     }
 }

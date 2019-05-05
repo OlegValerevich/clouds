@@ -26,9 +26,22 @@ CHARACTER SET utf8
 COLLATE utf8_unicode_ci 
 ENGINE = InnoDB;
 
-INSERT INTO `task` (`id`, `name`, `performer_id`, `status`, `description`) VALUES
+INSERT INTO `task` (`id`, `name`, `performer_id`, `status_id`, `description`) VALUES
 (1, 'Task 1', 2, 1, 'Progect 1' ),
 (2, 'Task 2', 3, 2, 'Progect 2' ),
 (3, 'Task 3', 1, 3, 'Progect 3' );
 
 SELECT * FROM task t;
+
+CREATE TABLE `status` (
+id INT AUTO_INCREMENT NOT NULL,
+name VARCHAR(255) NOT NULL, 
+PRIMARY KEY(id)) 
+DEFAULT CHARACTER SET utf8 
+COLLATE utf8_unicode_ci 
+ENGINE = InnoDB;
+
+INSERT INTO `status` (`id`, `name`) VALUES
+(1, 'Открыта'),
+(2, 'В работе'),
+(3, 'Завершена');

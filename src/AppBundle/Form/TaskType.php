@@ -20,7 +20,10 @@ class TaskType extends AbstractType
                     'class' => 'AppBundle:Performer',
                     'choice_label' => 'name'
                 ])
-                ->add('status')
+                ->add('status', EntityType::class, [
+                    'class' => 'AppBundle:Status',
+                    'choice_label' => 'name'
+                ])
                 ->add('description')
         ;
     }

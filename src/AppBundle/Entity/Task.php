@@ -36,9 +36,9 @@ class Task
     private $performer;
 
     /**
-     * @var int
+     * @var Status
      *
-     * @ORM\Column(name="status", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Status")
      */
     private $status;
 
@@ -110,9 +110,9 @@ class Task
     /**
      * Set status
      *
-     * @param integer $status
+     * @param string $status
      *
-     * @return Task
+     * @return Status
      */
     public function setStatus($status)
     {
@@ -124,7 +124,7 @@ class Task
     /**
      * Get status
      *
-     * @return int
+     * @return Status
      */
     public function getStatus()
     {
