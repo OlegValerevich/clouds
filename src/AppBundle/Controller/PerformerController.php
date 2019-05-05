@@ -36,6 +36,7 @@ class PerformerController extends Controller{
     /**
      * @Route("/performer/add", name="add_performer")
      * @param Request $request
+     * @Method({"POST"})
      */
     public function addAction(Request $request)
     {
@@ -98,6 +99,7 @@ class PerformerController extends Controller{
 
     /**
      * @Route("performer/remove/{id}", name="removePerformer", requirements={"id"="\d+"})
+     * @Method({"GET"})
      */
     public function removeAction($id)
     {

@@ -37,6 +37,7 @@ class TaskController extends Controller{
       
     /**
      * @Route("/task/remove/{id}", name="removeTask", requirements={"id"="\d+"})
+     * @Method({"GET"})
      */
     public function removeAction($id)
     {
@@ -96,7 +97,7 @@ class TaskController extends Controller{
     {
         if (!$request->request->get('performer')) {
             $rs['success'] = 0;
-            $rs['massage']= 'Ошибка! Для решения задачи необходим исполнитель.';
+            $rs['massage']= 'Ошибка! Необходимы исполнители.';
             return new JsonResponse($rs, 200);
         }
         
@@ -123,6 +124,7 @@ class TaskController extends Controller{
          
     /**
      * @Route("/task/add", name="add_task")
+     * @Method({"POST"})
      */
     public function addAction()
     {   
@@ -140,6 +142,7 @@ class TaskController extends Controller{
             $rs['success'] = 1;
         }else{
             $rs['success'] = 0;
+            $rs['massage']= 'Ошибка! Необходимы исполнители.';
         }
         return new JsonResponse($rs, 200);
     }

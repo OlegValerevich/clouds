@@ -1,26 +1,16 @@
 /**
  * Clouds 
  */
-//ф-я сбора информации с формы
-function getData(obj_form){
-    var hData={};
-    $('input, textarea, select', obj_form).each(function(){
-        if(this.name && this.name !=''){
-            hData[this.name]=this.value;
-        }
-    });
-    return hData;
-};
 
 //ф-я удаления исполнителя
 function removePerformer(id){
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         async: false,
         url: "/performer/remove/"+id,
         dataType: 'json',
-        success: function(response){
-            if(response['success']){
+        success: function(rs){
+            if(rs['success']){
                 $('#removePerf_'+id).hide();
             }else{
                 alert('Ошибка! Операция не выполнена');
@@ -32,12 +22,12 @@ function removePerformer(id){
 //ф-я удаления задачи
 function removeTask(id){
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         async: false,
         url: "/task/remove/"+id,
         dataType: 'json',
-        success: function(response){
-            if(response['success']){
+        success: function(rs){
+            if(rs['success']){
                 $('#removeTask_'+id).hide();
             }else{
                 alert('Ошибка! Операция не выполнена');
@@ -57,14 +47,15 @@ function addTask(){
                 if(rs['success']){
                     $('#taskPerformer').empty();
                     $.each(rs['performers'], function(key, value) {
-                        $('#taskPerformer').append('<option value="' + key + '">' + value + '</option>');
-                    });
+                        $('#taskPerformer').append('<option value="' + key + '">' + value + '</option>');});
+                        $("#addTask").modal({backdrop: "static"});
                 }else {
-                    alert('NOT TASK');
+                    alert(rs['massage']);
+                    document.location = '/';
             }
         }
     });  
-    $("#addTask").modal({backdrop: "static"});
+    
   });  
 }
 
@@ -78,12 +69,12 @@ function saveNewTask(){
             url: "/task/update",
             data: postData,
             dataType: 'json',
-            success: function(data){
-                if(data['success']){
-                    alert(data['massage']);
+            success: function(rs){
+                if(rs['success']){
+                    alert(rs['massage']);
                     document.location = '/task';
                 }else {
-                   alert(data['massage']);
+                   alert(rs['massage']);
                    document.location = '/';
                 }
             }
