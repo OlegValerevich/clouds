@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\TaskType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Doctrine\ORM\Query;
 
 /**
  * Description of TaskController
@@ -83,5 +84,56 @@ class TaskController extends Controller{
         return $this->render('@App/task/edit.html.twig',[
             'edit_form' => $form->createView()
         ]);
+    }
+    
+    /**
+     * @Route("/task/update", name="update_task")
+     * @param Request $request
+     */
+    public function updateAction(Request $request)
+    {
+        $form = $this->createForm(TaskType::class);
+        $form->add('Save', SubmitType::class);
+        $form->add('Cansel', SubmitType::class);
+
+        $form->handleRequest($request);
+        
+        if ($form->isValid() && $form->isSubmitted()) 
+        {
+            $perfomer = $form->getData();
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($perfomer);
+            $em->flush();
+             
+            return $this->redirectToRoute('task_index');
+        }
+
+        return $this->render('@App/task/addModal.html.twig',[
+            'add_form' => $form->createView()
+        ]);
+    }
+         
+    /**
+     * @Route("/task/add", name="add_task")
+     */
+    public function addAction()
+    {   
+        $rs = [];
+        $performer = [];
+    
+        $performers = $this->getDoctrine()->getRepository('AppBundle:Performer')->getPerformers();
+
+        if($performers){
+            foreach ($performers as $values){
+                $values = array_values($values);
+                $performer[$values[0]] = $values[1];
+            }
+            $rs['performers'] = $performer;
+            $rs['success'] = 1;
+        }else{
+            $rs['success'] = 0;
+        }
+        return new JsonResponse($rs, 200);
     }
 }

@@ -49,3 +49,67 @@ function removeTask(id){
     });   
 }
 
+//function addTask(){
+//    
+//    console.log("addTask");
+//    
+//    var myModal = new jBox('Modal', {
+//    width:500,
+//    height: 500,
+//    title: 'Добавление задачи',
+//    ajax: {
+//      url: '/task/test',
+////      data: {
+////        id: 1
+////      },
+//    reload: true,
+//    setContent: true,
+//    success: function (response) {
+//        console.log('jBox AJAX response', response);
+//        this.setContent(response);
+//      },
+//      error: function () {
+//        console.log('jBox AJAX NOT ');
+////        this.setContent('<b style="color: #d33">Error loading content.</b>');
+//      }
+//    }
+//  });
+//  myModal.open();
+//}
+
+//$(document).ready(function(){
+//  
+//    
+//    var myModal = new jBox('Modal', {
+//        attach: $('#btnModal'),
+//        width:500,
+//        height: 500,
+////        trigger: click,
+//        content: $('#Modal')
+//        
+//    });
+//    
+//    myModal.open();
+//});
+
+function addTask(){
+    $(document).ready(function(){ 
+        $.ajax({
+        type: 'POST',
+        async: false,
+        url: "/task/add",
+        dataType: 'json',
+        success: function(rs){
+            if(rs['success']){
+                $('#taskPerformer').empty();
+                $.each(rs['performers'], function(key, value) {
+                    $('#taskPerformer').append('<option value="' + key + '">' + value + '</option>');
+                });
+            }else {
+                alert('NOT TASK');
+            }
+        }
+    });  
+    $("#addTask").modal({backdrop: "static"});
+  });  
+}

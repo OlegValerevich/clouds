@@ -34,17 +34,54 @@
             {% block body %}
                     {% for flash in app.session.flashbag.get('error') %}
             <div class="alert alert-warning">{{ flash }}</div>
-        {% endfor %}    
-                
-
+            {% endfor %}    
             {% endblock %}  
             </div>
         </div>
-        
     </div>
+            
+    <div id="addTask" class="modal" tabindex="-1" role="dialog">
+      <div id="Modal" class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Добавление задачи</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>  
+                <label class="required">Название</label>
+                <input type="text" id="nameTask" required="required">  
+            </div>
+            <div>  
+                <label class="required">Исполнитель</label>
+                <select id="taskPerformer">
+                </select>
+            </div>
+            <div>  
+                <label class="required">Статус</label>
+                <select id="status">
+                    <option value="1" selected="selected">Открыта</option>
+                    <option value="2">В работе</option>
+                    <option value="3">Закрыта</option>
+                </select>
+            </div>
+            <div>  
+                <label class="required">Описание</label>
+                <input type="text" id="вescription" required="required">  
+            </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-primary">Сохранить</button>
+          </div>
+        </div>
+      </div>
+    </div>  
     
     <script src="{{ asset('bundles/app/js/jquery-3.4.0.min.js')}}"></script>
-    <script src="{{ asset('bundles/app/js/jquery-migrate-1.4.1.min.js')}}"></script>
+    {#<script src="{{ asset('bundles/app/js/jquery-migrate-1.4.1.min.js')}}"></script>#}
     <script src="{{ asset('bundles/app/js/main.js')}}"></script>
     <script src="{{ asset('bundles/app/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('bundles/app/js/popper.min.js')}}"></script>

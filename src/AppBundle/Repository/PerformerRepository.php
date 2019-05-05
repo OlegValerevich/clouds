@@ -21,4 +21,13 @@ class PerformerRepository extends \Doctrine\ORM\EntityRepository
                 ->getResult();
         return;
     }
+    
+    public function getPerformers(){
+
+        return $this
+                ->createQueryBuilder('p')
+                ->select('p.id', 'p.name')
+                ->getQuery()
+                ->getResult();
+    }
 }
