@@ -16,7 +16,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\TaskType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Doctrine\ORM\Query;
+use AppBundle\Entity\Task;
+use AppBundle\Entity\Performer;
 
 /**
  * Description of TaskController
@@ -89,29 +90,35 @@ class TaskController extends Controller{
     /**
      * @Route("/task/update", name="update_task")
      * @param Request $request
+     * @Method({"POST"})
      */
     public function updateAction(Request $request)
     {
-        $form = $this->createForm(TaskType::class);
-        $form->add('Save', SubmitType::class);
-        $form->add('Cansel', SubmitType::class);
-
-        $form->handleRequest($request);
-        
-        if ($form->isValid() && $form->isSubmitted()) 
-        {
-            $perfomer = $form->getData();
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($perfomer);
-            $em->flush();
-             
-            return $this->redirectToRoute('task_index');
+        if (!$request->request->get('performer')) {
+            $rs['success'] = 0;
+            $rs['massage']= 'Ошибка! Для решения задачи необходим исполнитель.';
+            return new JsonResponse($rs, 200);
         }
-
-        return $this->render('@App/task/addModal.html.twig',[
-            'add_form' => $form->createView()
-        ]);
+        
+        $task = new Task();
+        $performerId = $request->request->get('performer');
+        $performer = $this->getDoctrine()->getRepository('AppBundle:Performer')->find($performerId);
+        $task->setPerformer($performer);
+        
+        $task->setName($request->request->get('name'));
+        
+        $task->setStatus($request->request->get('status'));
+        
+        $task->setDescription($request->request->get('description'));
+              
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($task);
+        $em->flush();
+             
+        $rs['success'] = 1;
+        $rs['massage']= 'Задание добавлено';
+        
+        return new JsonResponse($rs, 200);
     }
          
     /**
