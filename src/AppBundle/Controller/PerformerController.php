@@ -41,12 +41,22 @@ class PerformerController extends Controller{
     public function addAction(Request $request)
     {
         $form = $this->createForm(PerformerType::class);
-        $form->add('Save', SubmitType::class);
-        $form->add('Cansel', SubmitType::class);
+        $form->add('save', SubmitType::class, ['label' => 'Сохранить']);
+        $form->add('canсel', SubmitType::class, [
+                'label' => 'Отмена', 
+                'attr' => [
+                    'formnovalidate' => 'formnovalidate'
+                ]
+            ]
+        );
 
         $form->handleRequest($request);
         
-        if ($form->isValid() && $form->isSubmitted()) 
+        if ($form->get('canсel')->isClicked()) {
+            return $this->redirectToRoute('performer_index');
+        }
+        
+        if ($form->isValid() && $form->get('save')->isClicked()) 
         {
             $perfomer = $form->getData();
             
@@ -76,12 +86,22 @@ class PerformerController extends Controller{
         }
         
         $form = $this->createForm(PerformerType::class, $performer);
-        $form->add('Save', SubmitType::class);
-        $form->add('Cansel', SubmitType::class);
-        
+        $form->add('save', SubmitType::class, ['label' => 'Сохранить']);
+        $form->add('canсel', SubmitType::class, [
+                'label' => 'Отмена', 
+                'attr' => [
+                    'formnovalidate' => 'formnovalidate'
+                ]
+            ]
+        );
+
         $form->handleRequest($request);
         
-        if ($form->isValid() && $form->isSubmitted()) 
+        if ($form->get('canсel')->isClicked()) {
+            return $this->redirectToRoute('performer_index');
+        }
+        
+        if ($form->isValid() && $form->get('save')->isClicked()) 
         {
             $perfomer = $form->getData();
             

@@ -67,12 +67,22 @@ class TaskController extends Controller{
         }
                
         $form = $this->createForm(TaskType::class, $task);
-        $form->add('Save', SubmitType::class);
-        $form->add('Cansel', SubmitType::class);
-        
+        $form->add('save', SubmitType::class, ['label' => 'Сохранить']);
+        $form->add('canсel', SubmitType::class, [
+                'label' => 'Отмена', 
+                'attr' => [
+                    'formnovalidate' => 'formnovalidate'
+                ]
+            ]
+        );
+
         $form->handleRequest($request);
         
-        if ($form->isValid() && $form->isSubmitted()) 
+        if ($form->get('canсel')->isClicked()) {
+            return $this->redirectToRoute('performer_index');
+        }
+        
+        if ($form->isValid() && $form->get('save')->isClicked()) 
         {
             $task = $form->getData();
             

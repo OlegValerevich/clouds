@@ -30,10 +30,9 @@
         {% endfor %}
         
         <div class="row">
-            <div class="col-sm">
             {% block body %}
-                    {% for flash in app.session.flashbag.get('error') %}
-            <div class="alert alert-warning">{{ flash }}</div>
+                {% for flash in app.session.flashbag.get('error') %}
+                <div class="alert alert-warning">{{ flash }}</div>
             {% endfor %}    
             {% endblock %}  
             </div>
@@ -50,30 +49,39 @@
             </button>
           </div>
           <div id="modal-body" class="modal-body">
-            <div>  
-                <label class="required">Название</label>
-                <input type="text" id="taskName" required="required">  
-            </div>
-            <div>  
-                <label class="required">Исполнитель</label>
-                <select id="taskPerformer"></select>
-            </div>
-            <div>  
-                <label class="required">Статус</label>
-                <select id="taskStatus">
-{#                    <option value="1" selected="selected">Открыта</option>
-                    <option value="2">В работе</option>
-                    <option value="3">Закрыта</option>#}
-                </select>
-            </div>
-            <div>  
-                <label class="required">Описание</label>
-                <input type="text" id="taskDescription" required="required">  
-            </div>
+            <div class="col-sm-9">  
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text required">Название</label>
+                    </div>
+                    <input type="text" id="taskName" class="form-control" required="required">  
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text required">Исполнитель</label>
+                    </div>
+                    <select class="form-control custom-select" id="taskPerformer"></select>
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text required">Статус</label>
+                    </div>    
+                    <select class="form-control custom-select" id="taskStatus"></select>
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text required">Описание</label>
+                    </div>      
+                    <input type="text" id="taskDescription" class="form-control" required="required">  
+                </div>
+            </div>  
           </div>
           <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-          <button type="button" class="btn btn-primary" onclick="saveNewTask();">Сохранить</button>
+          <button type="button" class="btn-default btn" data-dismiss="modal">Отмена</button>
+          <button type="button" class="btn-default btn" onclick="saveNewTask();">Сохранить</button>
           </div>
         </div>
       </div>

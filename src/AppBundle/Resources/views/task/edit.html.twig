@@ -1,11 +1,12 @@
 {% extends '@App/main.html.twig' %}
 
 {% block body %} 
-    <h1>edit</h1>
     {{form_start(edit_form)}}
-{#        {{form_fow(edit_form.performer.name)}}#}
+        {{form_row(edit_form.name, {'label': 'Название'} ) }}
+        {{form_row(edit_form.performer, {'label': 'Имя'} ) }}
+        {{form_row(edit_form.status, {'label': 'Статус'} ) }}
+        {{form_row(edit_form.description, {'label': 'Описание'} ) }}
     {{form_end(edit_form)}}
-
 {% endblock %}
 
 {% block stylesheets %}
