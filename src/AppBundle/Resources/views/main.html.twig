@@ -14,31 +14,30 @@
   </head>
 
   <body>
-    <br>
     <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a class="btn btn-outline-success my-2 my-sm-0" href="{{ path('performer_index') }}">Исполнители</a></li>
-                    <li class="list-inline-item"><a class="btn btn-outline-success my-2 my-sm-0" href="{{ path('task_index') }}">Задачи</a></li>
-                </ul>
-            </div>
-        </div>
-                
-        {% for flash in app.session.flashbag.get('error') %}
-            <div class="alert alert-warning">{{ flash }}</div>
-        {% endfor %}
-        
-        <div class="row">
-            {% block body %}
-                {% for flash in app.session.flashbag.get('error') %}
-                <div class="alert alert-warning">{{ flash }}</div>
-            {% endfor %}    
-            {% endblock %}  
-            </div>
-        </div>
+            <div class="card">
+                <div class="card-header">
+                  <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ path('performer_index') }}">Исполнители</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ path('task_index') }}">Задачи</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                      {% block body %}
+                         {% for flash in app.session.flashbag.get('error') %}
+                             <div class="alert alert-warning">{{ flash }}</div>
+                         {% endfor %}    
+                      {% endblock %}  
+                  </div>
+              </div>               
+            </div> 
     </div>
-            
+                  
     <div id="addTask" class="modal" tabindex="-1" role="dialog">
       <div id="Modal" class="modal-dialog" role="document">
         <div class="modal-content">
@@ -52,36 +51,36 @@
             <div class="col-sm-9">  
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text required">Название</label>
+                       <label class="input-group-text required">Название</label>
                     </div>
                     <input type="text" id="taskName" class="form-control" required="required">  
                 </div>
 
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text required">Исполнитель</label>
+                       <label class="input-group-text required">Исполнитель</label>
                     </div>
                     <select class="form-control custom-select" id="taskPerformer"></select>
                 </div>
 
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text required">Статус</label>
+                       <label class="input-group-text required">Статус</label>
                     </div>    
                     <select class="form-control custom-select" id="taskStatus"></select>
                 </div>
 
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text required">Описание</label>
+                       <label class="input-group-text required">Описание</label>
                     </div>      
                     <input type="text" id="taskDescription" class="form-control" required="required">  
                 </div>
             </div>  
           </div>
           <div class="modal-footer">
-          <button type="button" class="btn-default btn" data-dismiss="modal">Отмена</button>
-          <button type="button" class="btn-default btn" onclick="saveNewTask();">Сохранить</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-success" onclick="saveNewTask();">Сохранить</button>
           </div>
         </div>
       </div>

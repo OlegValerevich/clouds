@@ -78,8 +78,20 @@ function saveNewTask(){
             dataType: 'json',
             success: function(rs){
                 if(rs['success']){
-                    alert(rs['massage']);
-                    document.location = '/task';
+                    var myModal = new jBox('Modal', {
+                        width: 400,
+                        height: 200,
+                        closeButton: 'Закрыть', 
+                        title: 'Статус операции',
+                        content: '<h3>'+rs['massage']+'</h3>',
+                        onCreated: function () {
+                            $('#addTask').hide();
+                        },
+                        onClose: function() {
+                            document.location = '/task';  
+                        }
+                    });
+                    myModal.open();
                 }else {
                    alert(rs['massage']);
                    document.location = '/';
