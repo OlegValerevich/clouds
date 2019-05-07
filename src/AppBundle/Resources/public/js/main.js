@@ -36,6 +36,7 @@ function removeTask(id){
     });   
 }
 
+//ф-я добавления задачи
 function addTask(){
     $(document).ready(function(){ 
         $.ajax({
@@ -66,48 +67,15 @@ function addTask(){
   });  
 }
 
-//function saveNewTask(){
-//    $(document).ready(function(){
-//        var postData = {name: $('#taskName').val(), performer: $('#taskPerformer').val(),
-//                status: $('#taskStatus').val(), description: $('#taskDescription').val()};
-//        $.ajax({
-//            type: 'POST',
-//            async: false,
-//            url: "/task/update",
-//            data: postData,
-//            dataType: 'json',
-//            success: function(rs){
-//                if(rs['success']){
-//                    var myModal = new jBox('Modal', {
-//                        width: 400,
-//                        height: 200,
-//                        closeButton: 'Закрыть', 
-//                        title: 'Статус операции',
-//                        content: '<h3>'+rs['massage']+'</h3>',
-//                        onCreated: function () {
-//                            $('#addTask').hide();
-//                        },
-//                        onClose: function() {
-//                            document.location = '/task';  
-//                        }
-//                    });
-//                    myModal.open();
-//                }else {
-//                   alert(rs['massage']);
-//                   document.location = '/';
-//                }
-//            }
-//        });
-//    });
-//}
+//ф-я сохранения задачи
 function saveNewTask(){
     $(document).ready(function(){
         var postData = {name: $('#taskName').val(), performer: $('#taskPerformer').val(),
                 status: $('#taskStatus').val(), description: $('#taskDescription').val()};
 
         var options = {
-            width: 400,
-            height: 300, 
+            width: 500,
+            height: 200, 
             title: 'Статус операции',
             content: $('#infoTask'),
             onOpen: function () {

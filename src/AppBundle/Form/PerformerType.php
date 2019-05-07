@@ -14,7 +14,6 @@ class PerformerType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // $property = array('required' => false , 'empty_data'  =>  '0');
         $builder
                 ->add('name', Type\TextType::class)
                 ->add('position', Type\TextType::class)
@@ -28,7 +27,6 @@ class PerformerType extends AbstractType
     {
         $resolver->setDefaults(array(
              'data_class' => 'AppBundle\Entity\Performer'
-//            'data_class' => null
         ));
     }
 
