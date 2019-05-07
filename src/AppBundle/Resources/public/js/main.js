@@ -66,10 +66,57 @@ function addTask(){
   });  
 }
 
+//function saveNewTask(){
+//    $(document).ready(function(){
+//        var postData = {name: $('#taskName').val(), performer: $('#taskPerformer').val(),
+//                status: $('#taskStatus').val(), description: $('#taskDescription').val()};
+//        $.ajax({
+//            type: 'POST',
+//            async: false,
+//            url: "/task/update",
+//            data: postData,
+//            dataType: 'json',
+//            success: function(rs){
+//                if(rs['success']){
+//                    var myModal = new jBox('Modal', {
+//                        width: 400,
+//                        height: 200,
+//                        closeButton: 'Закрыть', 
+//                        title: 'Статус операции',
+//                        content: '<h3>'+rs['massage']+'</h3>',
+//                        onCreated: function () {
+//                            $('#addTask').hide();
+//                        },
+//                        onClose: function() {
+//                            document.location = '/task';  
+//                        }
+//                    });
+//                    myModal.open();
+//                }else {
+//                   alert(rs['massage']);
+//                   document.location = '/';
+//                }
+//            }
+//        });
+//    });
+//}
 function saveNewTask(){
     $(document).ready(function(){
         var postData = {name: $('#taskName').val(), performer: $('#taskPerformer').val(),
                 status: $('#taskStatus').val(), description: $('#taskDescription').val()};
+
+        var options = {
+            width: 400,
+            height: 300, 
+            title: 'Статус операции',
+            content: $('#infoTask'),
+            onOpen: function () {
+                $('#addTask').hide();
+            },
+            onClose: function() {
+                document.location = '/task';  
+            }
+        };
         $.ajax({
             type: 'POST',
             async: false,
@@ -77,24 +124,14 @@ function saveNewTask(){
             data: postData,
             dataType: 'json',
             success: function(rs){
+                var myModal = new jBox('Modal', options);
+
                 if(rs['success']){
-                    var myModal = new jBox('Modal', {
-                        width: 400,
-                        height: 200,
-                        closeButton: 'Закрыть', 
-                        title: 'Статус операции',
-                        content: '<h3>'+rs['massage']+'</h3>',
-                        onCreated: function () {
-                            $('#addTask').hide();
-                        },
-                        onClose: function() {
-                            document.location = '/task';  
-                        }
-                    });
+                    $('#card-title').html(rs['message']);
                     myModal.open();
                 }else {
-                   alert(rs['massage']);
-                   document.location = '/';
+                    $('#card-title').html(rs['message']);
+                    myModal.open();
                 }
             }
         });

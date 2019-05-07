@@ -85,7 +85,57 @@
         </div>
       </div>
     </div>  
-    
+                
+    <div id="addTask" class="modal" tabindex="-1" role="dialog">
+      <div id="Modal" class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Добавление задачи</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div id="modal-body" class="modal-body">
+            <div class="col-sm-9">  
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                       <label class="input-group-text required">Название</label>
+                    </div>
+                    <input type="text" id="taskName" class="form-control" required="required">  
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                       <label class="input-group-text required">Исполнитель</label>
+                    </div>
+                    <select class="form-control custom-select" id="taskPerformer"></select>
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                       <label class="input-group-text required">Статус</label>
+                    </div>    
+                    <select class="form-control custom-select" id="taskStatus"></select>
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                       <label class="input-group-text required">Описание</label>
+                    </div>      
+                    <input type="text" id="taskDescription" class="form-control" required="required">  
+                </div>
+            </div>  
+          </div>
+            
+            <div id="infoTask" class="card">
+              <div class="card-body">
+                <h5 id="card-title" class="card-title"></h5>
+                <p class="card-text">Для возврата в меню задач нажмите на кнопку</p>
+                <a href="" class="btn btn-success">Кнопка</a>
+              </div>
+            </div>
+
+                  
     <script src="{{ asset('bundles/app/js/jquery-3.4.0.min.js')}}"></script>
     <script src="{{ asset('bundles/app/js/main.js')}}"></script>
     <script src="{{ asset('bundles/app/js/bootstrap.min.js')}}"></script>

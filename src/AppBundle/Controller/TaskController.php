@@ -107,7 +107,7 @@ class TaskController extends Controller{
     {
         if (!$request->request->get('performer')) {
             $rs['success'] = 0;
-            $rs['massage']= 'Ошибка! Необходимы исполнители.';
+            $rs['message']= 'Ошибка! Необходимы исполнители.';
             return new JsonResponse($rs, 200);
         }
         
@@ -129,7 +129,7 @@ class TaskController extends Controller{
         $em->flush();
              
         $rs['success'] = 1;
-        $rs['massage']= 'Задание добавлено';
+        $rs['message']= 'Задание добавлено';
         
         return new JsonResponse($rs, 200);
     }
@@ -151,7 +151,7 @@ class TaskController extends Controller{
             $rs['success'] = 1;
         }else{
             $rs['success'] = 0;
-            $rs['massage']= 'Ошибка! Необходимы исполнители.';
+            $rs['message']= 'Ошибка! Необходимы исполнители.';
         }
         return new JsonResponse($rs, 200);
     }
